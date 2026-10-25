@@ -3,3 +3,7 @@
 
 # Служебные файлы macOS
 .DS_Store
+
+# питон
+__pycache__/
+.env
