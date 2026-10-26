@@ -7,3 +7,9 @@
 # питон
 __pycache__/
 .env
+
+# php
+vendor/
+
+# ключи для дженкинса
+lab04/secrets/
