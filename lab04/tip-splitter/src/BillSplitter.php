@@ -24,7 +24,7 @@ class BillSplitter
         return round($this->total + $this->tip($percent), 2);
     }
 
-    // сколько скидывается каждый
+    // сколько платит каждый
     public function perPerson(int $tipPercent = 0): float
     {
         return round($this->totalWithTip($tipPercent) / $this->people, 2);

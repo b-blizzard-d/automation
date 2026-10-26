@@ -1,4 +1,4 @@
-# каждый день в 6 утра — курс MDL -> EUR за вчера
+# каждый день в 6 утра: курс MDL -> EUR за вчера
 0 6 * * * /usr/local/bin/python /app/currency_exchange_rate.py MDL EUR $(date -d yesterday +\%F) >> /var/log/cron.log 2>&1
-# по пятницам в 17:00 — MDL -> USD за 7 дней прошлой недели
+# по пятницам в 17:00: MDL -> USD за 7 дней прошлой недели
 0 17 * * 5 for i in $(seq 1 7); do /usr/local/bin/python /app/currency_exchange_rate.py MDL USD $(date -d "$i days ago" +\%F); done >> /var/log/cron.log 2>&1

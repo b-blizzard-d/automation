@@ -4,12 +4,12 @@
 # Служебные файлы macOS
 .DS_Store
 
-# питон
+# Python
 __pycache__/
 .env
 
 # php
 vendor/
 
-# ключи для дженкинса
+# ключи для Jenkins
 lab04/secrets/

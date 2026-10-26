@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('Install Dependencies') {
             steps {
-                // ставим зависимости (phpunit) композером
+                // ставим зависимости (phpunit) через composer
                 echo 'Preparing project...'
                 sh 'cd lab04/tip-splitter && composer install'
             }
@@ -14,7 +14,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                // гоняем тесты
+                // запускаем тесты
                 echo 'Running tests...'
                 sh 'cd lab04/tip-splitter && vendor/bin/phpunit tests'
             }

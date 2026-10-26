@@ -12,7 +12,7 @@ services:
     networks:
       - jenkins-network
 
-  # агент, на нём будут гоняться php-тесты
+  # агент, на нём запускаются php-тесты
   ssh-agent:
     build:
       context: .
