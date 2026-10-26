@@ -1,7 +1,7 @@
 FROM python:3.12-slim
 
-# ставим cron
-RUN apt-get update && apt-get install -y cron
+# cron и часовые пояса
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y cron tzdata
 
 WORKDIR /app
 COPY . /app
