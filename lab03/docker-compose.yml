@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  cron:
+    build: .
+    container_name: lab03_cron
+    environment:
+      - API_URL=http://host.docker.internal:8080
+      - API_KEY=EXAMPLE_API_KEY
+      - TZ=Europe/Chisinau
+    # чтобы контейнер видел сервис на 8080, как в браузере
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
