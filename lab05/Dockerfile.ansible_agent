@@ -1,0 +1,16 @@
+FROM ubuntu:24.04
+
+# ansible для playbook, java нужна Jenkins для запуска агента, git для клонирования, sshd чтобы Jenkins мог зайти
+RUN apt-get update && apt-get install -y openssh-server git ansible openjdk-21-jre-headless
+
+# без /run/sshd sshd не запускается
+RUN useradd -m -s /bin/bash jenkins && mkdir -p /home/jenkins/.ssh /run/sshd
+
+# ключ Jenkins копируется в образ
+COPY secrets/ansible_agent_key.pub /home/jenkins/.ssh/authorized_keys
+RUN chown -R jenkins:jenkins /home/jenkins/.ssh && chmod 600 /home/jenkins/.ssh/authorized_keys
+
+# вход только по ключу
+RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
+
+CMD ["/usr/sbin/sshd", "-D"]
