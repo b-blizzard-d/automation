@@ -1,0 +1,14 @@
+# копирует только код и страницу, тесты и vendor на сервер не нужны
+- hosts: test
+  become: yes
+
+  tasks:
+    - name: копируем src
+      copy:
+        src: ../tip-splitter/src
+        dest: /var/www/tip-splitter/
+
+    - name: копируем public
+      copy:
+        src: ../tip-splitter/public
+        dest: /var/www/tip-splitter/
