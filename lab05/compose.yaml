@@ -28,6 +28,31 @@ services:
     networks:
       - jenkins-network
 
+  # здесь ansible, он настраивает test-server
+  ansible-agent:
+    build:
+      context: .
+      dockerfile: Dockerfile.ansible_agent
+    container_name: ansible-agent
+    # только ключ для входа на test-server, ключи Jenkins агенту не нужны
+    volumes:
+      - ./secrets/ansible_key:/secrets/ansible_key:ro
+    depends_on:
+      - jenkins-controller
+    networks:
+      - jenkins-network
+
+  # сайт будет на localhost:8000
+  test-server:
+    build:
+      context: .
+      dockerfile: Dockerfile.test_server
+    container_name: test-server
+    ports:
+      - "8000:80"
+    networks:
+      - jenkins-network
+
 volumes:
   jenkins_home:
   jenkins_agent_volume:

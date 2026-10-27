@@ -1,0 +1,17 @@
+FROM ubuntu:24.04
+
+# sshd для ansible, python3 нужен самому ansible, sudo чтобы ansible мог ставить пакеты
+RUN apt-get update && apt-get install -y openssh-server python3 sudo
+
+# пользователь ansible, sudo без пароля
+RUN useradd -m -s /bin/bash ansible && echo 'ansible ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/ansible
+RUN mkdir -p /home/ansible/.ssh /run/sshd
+
+# ключ для входа на сервер копируется в образ
+COPY secrets/ansible_key.pub /home/ansible/.ssh/authorized_keys
+RUN chown -R ansible:ansible /home/ansible/.ssh && chmod 600 /home/ansible/.ssh/authorized_keys
+
+# вход только по ключу
+RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
+
+CMD ["/usr/sbin/sshd", "-D"]
